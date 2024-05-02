@@ -18,14 +18,7 @@ public class CarRepository extends MainRepository<Car>{
             preparedStatement.setInt(1, id);
             try(ResultSet rs = preparedStatement.executeQuery()){
                 if(rs.next()){
-                    car = new Car(
-                        rs.getInt("id"),
-                        rs.getBoolean("state"),
-                        rs.getInt("price"),
-                        rs.getString("brand"),
-                        rs.getString("model"),
-                        rs.getInt("seats")
-                    );
+                    car = CarRepository.carFromResultSet(rs);
                 }
             }
         }
@@ -93,4 +86,25 @@ public class CarRepository extends MainRepository<Car>{
         }
         return cars;
     }
+
+public static Car carFromResultSet(ResultSet rs) {
+    try {
+        return new Car(
+            rs.getInt("id"),
+            rs.getBoolean("state"),
+            rs.getInt("price"),
+            rs.getString("brand"),
+            rs.getString("model"),
+            rs.getInt("seats")
+        );
+    } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    return null;
+
+
+}
+
+
 }

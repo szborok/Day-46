@@ -20,7 +20,7 @@ public class CarLogicTest {
 
     @Test
     public void testInsert() {
-
+        
     }
 
     @Test
