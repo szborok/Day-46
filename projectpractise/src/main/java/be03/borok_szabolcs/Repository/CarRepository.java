@@ -13,14 +13,22 @@ public class CarRepository extends MainRepository<Car> {
     public Car getOne(Integer id) throws SQLException {
         Car car = null;
         try(PreparedStatement preparedStatement = this.databaseConnection.getConnection().prepareStatement(
-            "SELECT * FROM CarVehicleProducts WHERE id = ?" )) {
+            "SELECT * FROM CarVehicleProducts WHERE id = ?")){
             preparedStatement.setInt(1, id);
             try(ResultSet rs = preparedStatement.executeQuery()){
-                if(rs.next()) {
-                    car = new Car(id, null, id, null, null, id)
+                if(rs.next()){
+                    car = new Car(
+                        rs.getInt("id"),
+                        rs.getBoolean("state"),
+                        rs.getInt("price"),
+                        rs.getString("brand"),
+                        rs.getString("model"),
+                        rs.getInt("seats")
+                    );
                 }
-            }x
-        }   
+            }
+        }
+        return car;
     }
 
     @Override

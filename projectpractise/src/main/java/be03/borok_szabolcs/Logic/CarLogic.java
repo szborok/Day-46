@@ -1,13 +1,16 @@
 package be03.borok_szabolcs.Logic;
 
-import be03.borok_szabolcs.Repository.MainRepository;
+import be03.borok_szabolcs.Model.Car;
+import be03.borok_szabolcs.Repository.CarRepository;
 
-public abstract class MainLogic<T> implements IMainLogic<T> {
-    MainRepository<T> repository;
+public abstract class CarLogic implements IMainLogic<Car> {
+    CarRepository repository;
 
-    public MainLogic() {
-        this.repository = new MainRepository;
+    public CarLogic() {
+        this.repository = new CarRepository();
     }
+
+
 
 
 

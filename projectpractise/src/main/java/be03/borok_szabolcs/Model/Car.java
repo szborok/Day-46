@@ -1,4 +1,4 @@
-package be03.hosszu_akos.Model;
+package be03.borok_szabolcs.Model;
 
 public class Car extends Vehicle{
     
