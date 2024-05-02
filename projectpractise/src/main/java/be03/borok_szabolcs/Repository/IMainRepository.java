@@ -14,10 +14,10 @@ public interface IMainRepository<T> {
 
     // T tipusu elemmel fog visszaterni, hol T barmilyen tipusu elem
     
-    T getOne(Integer id) throws SQLException;    // R - egy elemet
-    void insert(T object);                       // C - kap egy T tipusu elemet
-    void delete(Integer id);                     // D - kap egy indexet
-    void update(T object, Integer id);           // U - kap egy T tipusu elemet, valamint egy indexet
-    List<T> getAll();                            // R - osszes elemet
+    T GetOne(Integer id) throws SQLException;    // R - egy elemet
+    void Insert(T object) throws SQLException;                       // C - kap egy T tipusu elemet
+    void Delete(Integer id) throws SQLException;                     // D - kap egy indexet
+    void Update(T object, Integer id) throws SQLException;           // U - kap egy T tipusu elemet, valamint egy indexet
+    List<T> GetAll() throws SQLException;                            // R - osszes elemet
 
 }

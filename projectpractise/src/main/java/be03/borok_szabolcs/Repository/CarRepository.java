@@ -3,14 +3,15 @@ package be03.borok_szabolcs.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import be03.borok_szabolcs.Model.Car;
 
-public class CarRepository extends MainRepository<Car> {
+public class CarRepository extends MainRepository<Car>{
 
     @Override
-    public Car getOne(Integer id) throws SQLException {
+    public Car GetOne(Integer id) throws SQLException {
         Car car = null;
         try(PreparedStatement preparedStatement = this.databaseConnection.getConnection().prepareStatement(
             "SELECT * FROM CarVehicleProducts WHERE id = ?")){
@@ -32,32 +33,64 @@ public class CarRepository extends MainRepository<Car> {
     }
 
     @Override
-    public void insert(Car object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    public void Insert(Car object) throws SQLException {
+        try(PreparedStatement preparedStatement = this.databaseConnection.getConnection().prepareStatement(
+            "INSERT INTO CarVehicleProducts (state, price, brand, model, seats) VALUES(?,?,?,?,?)")){
+            preparedStatement.setBoolean(1, object.getState());
+            preparedStatement.setInt(2, object.getPrice());
+            preparedStatement.setString(3, object.getBrand());
+            preparedStatement.setString(4, object.getModel());
+            preparedStatement.setInt(5, object.getSeats());
+
+            preparedStatement.executeUpdate();
+
+        }
     }
 
     @Override
-    public void delete(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public void Delete(Integer id) throws SQLException {
+        try(PreparedStatement preparedStatement = this.databaseConnection.getConnection().prepareStatement(
+            "DELETE FROM CarVehicleProducts WHERE id = ?")){
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override
-    public void update(Car object, Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
+    public void Update(Car object, Integer id) throws SQLException {
+        try (PreparedStatement preparedStatement = this.databaseConnection.getConnection().prepareStatement(
+            "UPDATE CarVehicleProducts SET state = ?, price = ?, brand = ?, model = ?, seats = ? WHERE id = ?")){
+                preparedStatement.setBoolean(1, object.getState());
+                preparedStatement.setInt(2, object.getPrice());
+                preparedStatement.setString(3, object.getBrand());
+                preparedStatement.setString(4, object.getModel());
+                preparedStatement.setInt(5, object.getSeats());
+                preparedStatement.setInt(6, id);
+
+                preparedStatement.executeUpdate();
+            }}
 
     @Override
-    public List<Car> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+    public List<Car> GetAll() throws SQLException {
+        List<Car> cars = new ArrayList<>();
+        try(PreparedStatement preparedStatement = this.databaseConnection.getConnection().prepareStatement(
+            "SELECT * FROM CarVehicleProducts")){
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                while(rs.next()){
+                    Car car = new Car(
+                        rs.getInt("id"),
+                        rs.getBoolean("state"),
+                        rs.getInt("price"),
+                        rs.getString("brand"),
+                        rs.getString("model"),
+                        rs.getInt("seats")
+                    );
+                    
+                    cars.add(car);
+                }
+            }
+        }
+        return cars;
     }
-
-
-
-    
-
-    
 }

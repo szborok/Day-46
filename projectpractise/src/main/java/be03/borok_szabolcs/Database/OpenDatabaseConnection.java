@@ -26,6 +26,7 @@ public class OpenDatabaseConnection {
         while (db_scanner.hasNextLine()) {
             raw_properties.add(db_scanner.nextLine());
         }
+        db_scanner.close();
         return new DatabaseProperties(raw_properties);
     }
 
